@@ -1,5 +1,4 @@
 #include "R503.hpp"
-
 /*
  *  Makro to send a command and receive the acknowledge package
  *  @ACK_SIZE: size of the acknowledge package or a larger integer 
@@ -88,9 +87,10 @@ char const *R503::errorMsg(int code) {
     }
 }
 
-R503::R503(int rxPin, int txPin, uint32_t address, uint32_t password, long baudrate) : 
-    rxPin(rxPin), txPin(txPin), address(address), password(password), baudrate(baudrate) {
-    serial = new SoftwareSerial(rxPin, txPin);
+R503::R503(int rxPin, int txPin, uint32_t address, uint32_t password, long baudrate, HardwareSerial * serial) : 
+    rxPin(rxPin), txPin(txPin), address(address), password(password), baudrate(baudrate), serial(serial) {
+    // serial = new SoftwareSerial(rxPin, txPin);   
+    
 }
 
 R503::~R503() {
@@ -98,13 +98,15 @@ R503::~R503() {
 }
 
 int R503::init() {
-    serial->begin(baudrate);
-    pinMode(rxPin, INPUT);
-    pinMode(txPin, OUTPUT);
+    Serial.println("R503 TX:" + String(txPin));
+    Serial.println("R503 RX:" + String(rxPin));
+    serial->begin(baudrate, SERIAL_8N1, rxPin, txPin);
+    // pinMode(rxPin, INPUT);
+    // pinMode(txPin, OUTPUT);
     
     int ret = verifyPassword();
     if(ret != R503_SUCCESS) {
-        #if R503_DEBUG & 0x02
+        #if R503_DEBUG > 0x02
         Serial.printf("error verifying password: %s\n", R503::errorMsg(ret));
         #endif
         return ret;
@@ -113,7 +115,7 @@ int R503::init() {
     SystemParameter param;
     ret = readSystemParameter(param);
     if(ret != R503_SUCCESS) {
-        #if R503_DEBUG & 0x02
+        #if R503_DEBUG > 0x02
         Serial.printf("error reading system parameters: %s\n", R503::errorMsg(ret));
         #endif
         return ret;
@@ -133,7 +135,7 @@ void R503::sendPackage(Package const &package) {
         length >> 8, length
     };
     
-    #if R503_DEBUG & 0x01
+    #if R503_DEBUG > 0x01
     static int packageCount = 0;
     Serial.printf("sending package %d: ", packageCount++);
     for(int i = 0; i < sizeof(bytes); i++) {
@@ -152,7 +154,7 @@ void R503::sendPackage(Package const &package) {
 }
 
 int R503::receivePackage(Package &package) {
-    #if R503_DEBUG & 0x01
+    #if R503_DEBUG > 0x01
     static int packageCount = 0;
     Serial.printf("receiving package %d: ", packageCount++);
     #endif
@@ -162,9 +164,10 @@ int R503::receivePackage(Package &package) {
     uint16_t length;
     while(millis() - start < R503_RECEIVE_TIMEOUT) {
         int byte = serial->read();
+        // Serial.printf("byte: %d", byte);
         if(byte == -1)
             continue;
-        #if R503_DEBUG & 0x01
+        #if R503_DEBUG > 0x01
         Serial.printf("%02X ", byte);
         #endif
         switch(index) {

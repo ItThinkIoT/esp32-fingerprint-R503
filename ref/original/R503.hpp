@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef R503_HPP
 #define R503_HPP
 
@@ -22,10 +24,13 @@
  * bit 1 set: print error messages
  * bit 2 set: define extra functios to print information (e.g. printProductInfo(), printSystemParameter) 
  */
+#ifndef R503_DEBUG
 #define R503_DEBUG 0x04
+#endif
 
 #include <stdint.h>
-#include "SoftwareSerial.h"
+#include <HardwareSerial.h>
+// #include "SoftwareSerial.h"
 
 /*
  * Confirmation Codes
@@ -166,7 +171,8 @@ class R503 {
     uint16_t data_package_size;
     
     int rxPin, txPin;
-    SoftwareSerial *serial;
+    HardwareSerial *serial;
+    // SoftwareSerial *serial;
     
 public:
     /*
@@ -184,7 +190,7 @@ public:
      *     to detect wether sensor is touched while enrolling new finger you best use takeImage() and check wether R503_NO_FINGER is returned 
      * white wire connects to 3.3V
      */
-    R503(int rxPin, int txPin, uint32_t address = 0xFFFFFFFF, uint32_t password = 0x0, long baudrate = 57600);
+    R503(int rxPin, int txPin, uint32_t address = 0xFFFFFFFF, uint32_t password = 0x0, long baudrate = 57600, HardwareSerial * serial = NULL);
     virtual ~R503();
     
     /*

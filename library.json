@@ -1,0 +1,19 @@
+{
+    "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
+    "name": "esp32-fingerprint-R503@ithtink",
+    "version": "1.0.0",
+    "keywords": "iot fingerprint R503",
+    "description": "Fingerprint library for GROW R503 module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com:ItThinkIoT/esp32-fingerprint-R503"
+    },
+    "authors": {
+        "name": "Guilherme Gregorini",
+        "email": "guilherme@itthink.io",
+        "url": "https://www.github.com/Guihgo"
+    },
+    "dependencies": {},
+    "frameworks": "arduino",
+    "platforms": "espressif8266, espressif32"
+}
