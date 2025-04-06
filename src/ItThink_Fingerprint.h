@@ -85,19 +85,20 @@
 
 #define FINGERPRINT_FIRMWARE_VERSION 0x3A
 
-#define FINGERPRINT_LED_BREATHING 0x01   //!< Breathing light
-#define FINGERPRINT_LED_FLASHING 0x02    //!< Flashing light
-#define FINGERPRINT_LED_ON 0x03          //!< Always on
-#define FINGERPRINT_LED_OFF 0x04         //!< Always off
-#define FINGERPRINT_LED_GRADUAL_ON 0x05  //!< Gradually on
-#define FINGERPRINT_LED_GRADUAL_OFF 0x06 //!< Gradually off
-#define FINGERPRINT_LED_RED 0x01         //!< Red LED
-#define FINGERPRINT_LED_BLUE 0x02        //!< Blue LED
-#define FINGERPRINT_LED_PURPLE 0x03      //!< Purple LEDpassword
-#define FINGERPRINT_LED_GREEN 0x04       //!< Green LEDpassword
-#define FINGERPRINT_LED_YELLOW 0x05      //!< Yellow LEDpassword
-#define FINGERPRINT_LED_CYAN 0x06       //!< Cyan LEDpassword
-#define FINGERPRINT_LED_WHITE 0x07       //!< White LEDpassword
+#define FINGERPRINT_LED_CONTROL_BREATHING 0x01   //!< Breathing light
+#define FINGERPRINT_LED_CONTROL_FLASHING 0x02    //!< Flashing light
+#define FINGERPRINT_LED_CONTROL_ON 0x03          //!< Always on
+#define FINGERPRINT_LED_CONTROL_OFF 0x04         //!< Always off
+#define FINGERPRINT_LED_CONTROL_GRADUAL_ON 0x05  //!< Gradually on
+#define FINGERPRINT_LED_CONTROL_GRADUAL_OFF 0x06 //!< Gradually off
+
+#define FINGERPRINT_LED_COLOR_RED 0x01         //!< Red LED
+#define FINGERPRINT_LED_COLOR_BLUE 0x02        //!< Blue LED
+#define FINGERPRINT_LED_COLOR_PURPLE 0x03      //!< Purple LEDpassword
+#define FINGERPRINT_LED_COLOR_GREEN 0x04       //!< Green LEDpassword
+#define FINGERPRINT_LED_COLOR_YELLOW 0x05      //!< Yellow LEDpassword
+#define FINGERPRINT_LED_COLOR_CYAN 0x06       //!< Cyan LEDpassword
+#define FINGERPRINT_LED_COLOR_WHITE 0x07       //!< White LEDpassword
 
 #define FINGERPRINT_REG_ADDR_ERROR 0x1A //!< shows register address error
 #define FINGERPRINT_WRITE_REG 0x0E      //!< Write system register instruction
