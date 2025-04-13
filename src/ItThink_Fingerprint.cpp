@@ -143,7 +143,7 @@ ItThink_Fingerprint::ItThink_Fingerprint(Stream *serial, uint32_t password)
 /**************************************************************************/
 void ItThink_Fingerprint::begin(uint32_t baudrate)
 {
-  delay(1000); // one second delay to let the sensor 'boot up'
+  // delay(1000); // one second delay to let the sensor 'boot up'
 
   if (hwSerial)
     hwSerial->begin(baudrate);
