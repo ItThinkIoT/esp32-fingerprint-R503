@@ -59,12 +59,12 @@
 
 #define FINGERPRINT_TIMEOUT 0xFF   //!< Timeout was reached
 #define FINGERPRINT_BADPACKET 0xFE //!< Bad packet was sent
-#define FINGERPRINT_AWAITED 0xFD //!< Awaited time was reached
+#define FINGERPRINT_AWAITED 0xFD   //!< Awaited time was reached
 
-#define FINGERPRINT_GETIMAGE 0x01 //!< Collect finger image
+#define FINGERPRINT_GETIMAGE 0x01    //!< Collect finger image
 #define FINGERPRINT_GETIMAGE_EX 0x28 //!< Collect finger image extension (only good image quality)
-#define FINGERPRINT_IMAGE2TZ 0x02 //!< Generate character file from image
-#define FINGERPRINT_SEARCH 0x04   //!< Search for fingerprint in slot
+#define FINGERPRINT_IMAGE2TZ 0x02    //!< Generate character file from image
+#define FINGERPRINT_SEARCH 0x04      //!< Search for fingerprint in slot
 #define FINGERPRINT_REGMODEL \
   0x05                                  //!< Combine character files and generate template
 #define FINGERPRINT_STORE 0x06          //!< Store template
@@ -92,13 +92,13 @@
 #define FINGERPRINT_LED_CONTROL_GRADUAL_ON 0x05  //!< Gradually on
 #define FINGERPRINT_LED_CONTROL_GRADUAL_OFF 0x06 //!< Gradually off
 
-#define FINGERPRINT_LED_COLOR_RED 0x01         //!< Red LED
-#define FINGERPRINT_LED_COLOR_BLUE 0x02        //!< Blue LED
-#define FINGERPRINT_LED_COLOR_PURPLE 0x03      //!< Purple LEDpassword
-#define FINGERPRINT_LED_COLOR_GREEN 0x04       //!< Green LEDpassword
-#define FINGERPRINT_LED_COLOR_YELLOW 0x05      //!< Yellow LEDpassword
-#define FINGERPRINT_LED_COLOR_CYAN 0x06       //!< Cyan LEDpassword
-#define FINGERPRINT_LED_COLOR_WHITE 0x07       //!< White LEDpassword
+#define FINGERPRINT_LED_COLOR_RED 0x01    //!< Red LED
+#define FINGERPRINT_LED_COLOR_BLUE 0x02   //!< Blue LED
+#define FINGERPRINT_LED_COLOR_PURPLE 0x03 //!< Purple LEDpassword
+#define FINGERPRINT_LED_COLOR_GREEN 0x04  //!< Green LEDpassword
+#define FINGERPRINT_LED_COLOR_YELLOW 0x05 //!< Yellow LEDpassword
+#define FINGERPRINT_LED_COLOR_CYAN 0x06   //!< Cyan LEDpassword
+#define FINGERPRINT_LED_COLOR_WHITE 0x07  //!< White LEDpassword
 
 #define FINGERPRINT_REG_ADDR_ERROR 0x1A //!< shows register address error
 #define FINGERPRINT_WRITE_REG 0x0E      //!< Write system register instruction
@@ -148,11 +148,14 @@
 
 #define DEFAULTTIMEOUT 1000 //!< UART reading timeout in milliseconds
 
-#define REPEAT_UNTIL_OK(cmd) \
-    uint8_t ___r = 1; \
-    do { \
-      ___r = cmd; \
-    } while (___r != FINGERPRINT_OK)
+#define REPEAT_UNTIL_OK(cmd)           \
+  {                                    \
+    uint8_t result = 1;                \
+    do                                 \
+    {                                  \
+      result = cmd;                    \
+    } while (result != FINGERPRINT_OK); \
+  }
 
 ///! Helper class to craft UART packets
 struct ItThink_Fingerprint_Packet
@@ -226,11 +229,11 @@ public:
 
   uint8_t autoEnroll(uint8_t location = 0xC8, bool allowDupID = 0, bool allowDupFP = 0, bool returnErrorStatus = true, bool fingerMustLeave = true);
   uint8_t autoVerify(uint8_t securityLevel = 5,
-                      uint8_t startPosition = 0,
-                      uint8_t searches = 15,
-                      bool keyStep = true,
-                      uint8_t maxTries = 5, 
-                      uint16_t scoreThreshold = 0);
+                     uint8_t startPosition = 0,
+                     uint8_t searches = 15,
+                     bool keyStep = true,
+                     uint8_t maxTries = 5,
+                     uint16_t scoreThreshold = 0);
 
   uint8_t verify(uint8_t maxTries = 5, uint32_t await = 5000);
 
@@ -241,7 +244,7 @@ public:
   void writeStructuredPacket(const ItThink_Fingerprint_Packet &p);
   uint8_t getStructuredPacket(ItThink_Fingerprint_Packet *p,
                               uint16_t timeout = DEFAULTTIMEOUT, uint32_t await = 0);
-  
+
   /// The matching location that is set by fingerFastSearch()
   uint16_t fingerID;
   /// The confidence of the fingerFastSearch() match, higher numbers are more
